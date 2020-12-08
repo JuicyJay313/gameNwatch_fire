@@ -15,10 +15,17 @@
 Rescuee = Class{}
 
 function Rescuee:init(type)
+    -- starting position
     self.x = VIRTUAL_WIDTH - 34
     self.y = VIRTUAL_HEIGHT / 4 - 10
+
+    -- determine which of the 3 types the rescuee can be
     self.type = type
+
+    -- state in which the rescuee is
+    -- determine the animation and the quads used for rendering
     self.currentState = 'falling'
+
     if self.type == 1 then
         self.dx = 50
         self.gravity = 145/100
@@ -60,6 +67,7 @@ function Rescuee:init(type)
     -- will turn true if the rescuee falls on the floor or lands in the ambulance
     self.outBound = false
 
+    -- starts with no vertical velocity
     self.dy = 0
  
 end

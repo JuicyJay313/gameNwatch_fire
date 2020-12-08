@@ -10,7 +10,7 @@
 PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
-    self.ambulance = {x = 50, y = VIRTUAL_HEIGHT/2 + 10}
+    self.ambulance = {x = 50, y = VIRTUAL_HEIGHT/2 + 10} -- change
     self.timer = 0
 end
 
