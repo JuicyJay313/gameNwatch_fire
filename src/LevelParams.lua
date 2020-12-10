@@ -11,8 +11,12 @@
 LevelParams = Class{}
 
 function LevelParams:init(score)
-    self.level = math.floor(score/200)
+    self.level = math.floor(score/200) + 1
     self.delay = math.max(0.5, 
-        (4 - self.level * 0.1)
+        (4 - (self.level-1) * 0.1)
     )
+end
+
+function LevelParams:update(score)
+    self.level = math.floor(score/200) + 1
 end

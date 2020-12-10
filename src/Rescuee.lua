@@ -22,8 +22,8 @@ function Rescuee:init(type)
     -- determine which of the 3 types the rescuee can be
     self.type = type
 
-    -- state in which the rescuee is
-    -- determine the animation and the quads used for rendering
+    -- State in which the rescuee is 
+    -- AND determine the animation and the quads used for rendering
     self.currentState = 'falling'
 
     if self.type == 1 then

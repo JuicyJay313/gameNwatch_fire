@@ -9,6 +9,7 @@
 
 PlayState = Class{__includes = BaseState}
 
+
 function PlayState:init()
     self.ambulance = {x = 50, y = VIRTUAL_HEIGHT/2 + 10} -- change
     self.timer = 0
@@ -20,19 +21,17 @@ function PlayState:enter(params)
     self.rescuees = params.rescuees
     self.score = params.score
     self.lostLives = params.lostLives
-    self.level = params.level
-          
+    self.levelParams = LevelParams(self.score)      
 end
 
 function PlayState:update(dt)
 
-    local levelParams = LevelParams(self.score)
-    self.level = levelParams.level
-    self.timer = self.timer + dt
-    self.board:update(dt)
     
 
-    if self.timer > levelParams.delay then
+    self.timer = self.timer + dt
+    self.board:update(dt)
+
+    if self.timer > self.levelParams.delay then
         table.insert(self.rescuees, Rescuee(math.random(3)))
         self.timer = 0
     end
@@ -56,7 +55,7 @@ function PlayState:update(dt)
                 toAnimate = rescuee,
                 board = self.board,
                 score = self.score,
-                level = self.level,
+                level = self.levelParams.level,
                 lostLives = self.lostLives
             })
         end
@@ -73,6 +72,8 @@ function PlayState:update(dt)
         end
     end
 
+    self.levelParams:update(self.score)
+
 
     
     if love.keyboard.wasPressed('escape') then
@@ -87,8 +88,9 @@ function PlayState:render()
 
     self.board:render()
     displayScore(self.score)
-    displayLevel(self.level)
+    displayLevel(self.levelParams.level)
 
+    -- ***** add a function displayLostLives in main.lua *****
     if #self.lostLives > 0 then
         local offset = (VIRTUAL_WIDTH - 5) - 32
         for y = 1, #self.lostLives do 

@@ -34,7 +34,7 @@ require 'src/states/game/TitleState'
 require 'src/states/game/PlayState'
 require 'src/states/game/HurtState'
 require 'src/states/game/GameOverState'
-require 'src/states/game/TestState'
+require 'src/states/game/ChangeLevelState'
 
 
 gTextures = {
@@ -46,4 +46,10 @@ gTextures = {
 gFrames = {
     ['rescuees'] = GenerateQuads(gTextures['rescuees'], 32, 32),
     ['lostLives'] = GenerateQuads(gTextures['lostLives'], 32, 32)
+}
+
+gFonts = {
+    -- *** placeholder ***
+    ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
+    ['large'] = love.graphics.newFont('fonts/font.ttf', 32)       
 }

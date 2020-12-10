@@ -32,7 +32,7 @@ function HurtState:enter(params)
                 board = self.board,
                 score = self.score,
                 lostLives = self.lostLives,
-                level = self.level
+                -- level = self.level
             })
         else
             gStateMachine:change('game over', {
@@ -56,6 +56,8 @@ function HurtState:render()
     self.board:render()
     displayScore(self.score)
     displayLevel(self.level)
+
+    -- ***** add a function displayLostLives in main.lua *****
     if #self.lostLives > 0 then
         local offset = (VIRTUAL_WIDTH - 5) - 32
         for y = 1, #self.lostLives do 

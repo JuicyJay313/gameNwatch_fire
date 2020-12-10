@@ -23,10 +23,6 @@ function love.load()
 
     math.randomseed(os.time())
 
-    gFonts = {
-        -- *** placeholder ***
-        ['medium'] = love.graphics.newFont('fonts/font.ttf', 16)       
-    }
 
     love.graphics.setFont(gFonts['medium'])
 
@@ -41,7 +37,7 @@ function love.load()
         ['play'] = function() return PlayState() end,
         ['hurt'] = function() return HurtState() end,
         ['game over'] = function() return GameOverState() end,
-        ['test'] = function() return TestState() end
+        ['change'] = function() return ChangeLevelState() end
     }
     
 
@@ -100,5 +96,5 @@ function displayLevel(level)
     love.graphics.setFont(gFonts['medium'])
 
     love.graphics.print('Level: ', VIRTUAL_WIDTH/3, 5)
-    love.graphics.printf(tostring(level + 1), VIRTUAL_WIDTH/2, 5, 40, 'left')
+    love.graphics.printf(tostring(level), VIRTUAL_WIDTH/2, 5, 40, 'left')
 end

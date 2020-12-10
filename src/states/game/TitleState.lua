@@ -15,7 +15,7 @@ function TitleState:init()
     self.rescuees = {}
     self.score = 0
     self.lostLives = {}
-    self.level = 1
+    
 end
 
 function TitleState:update(dt)
@@ -25,12 +25,11 @@ function TitleState:update(dt)
     end
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('play', {
+        gStateMachine:change('change', {
             board = self.board,
             rescuees = self.rescuees,
             score = self.score,
-            lostLives = self.lostLives,
-            level = self.level
+            lostLives = self.lostLives
         })
     end
 end

@@ -28,12 +28,11 @@ function GameOverState:update(dt)
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         if highlighted == 1 then
-            gStateMachine:change('play', {
+            gStateMachine:change('change', {
                 board = Board(1),
                 rescuees = {},
                 score = 0,
-                lostLives = {},
-                level = 1
+                lostLives = {}
             })
         else    
             gStateMachine:change('title')
