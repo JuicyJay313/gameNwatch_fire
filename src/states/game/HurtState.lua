@@ -18,6 +18,7 @@ function HurtState:enter(params)
     self.score = params.score
     self.level = params.level
     self.lostLives = params.lostLives
+    self.goal = params.goal
     self.toAnimate.currentState = 'hurt'
     self.rescuees = {}
     
@@ -27,13 +28,22 @@ function HurtState:enter(params)
     })
     :finish(function()
         if #self.lostLives < 3 then
-            gStateMachine:change('play', {
-                rescuees = self.rescuees,
-                board = self.board,
-                score = self.score,
-                lostLives = self.lostLives,
-                -- level = self.level
-            })
+            -- Checks to see we return to the same level or if the 
+            -- goal was reached and proceed to the next level.
+            if self.score >= self.goal then
+                gStateMachine:change('change', {
+                    score = self.score,
+                    board = self.board,
+                    lostLives = self.lostLives
+                })
+            else
+                gStateMachine:change('play', {
+                    rescuees = self.rescuees,
+                    board = self.board,
+                    score = self.score,
+                    lostLives = self.lostLives
+                })
+            end
         else
             gStateMachine:change('game over', {
                 score = self.score
@@ -56,13 +66,5 @@ function HurtState:render()
     self.board:render()
     displayScore(self.score)
     displayLevel(self.level)
-
-    -- ***** add a function displayLostLives in main.lua *****
-    if #self.lostLives > 0 then
-        local offset = (VIRTUAL_WIDTH - 5) - 32
-        for y = 1, #self.lostLives do 
-            love.graphics.draw(gTextures['lostLives'], gFrames['lostLives'][self.lostLives[y]], offset, 5)
-            offset = offset - 32
-        end 
-    end
+    displayLostLives(self.lostLives)
 end

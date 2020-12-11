@@ -9,7 +9,6 @@ ChangeLevelState = Class{__includes = BaseState}
 
 function ChangeLevelState:init()
     self.levelLabelX = -80
-    --self.levelLabelY = VIRTUAL_HEIGHT/2 - 8
 end
 
 function ChangeLevelState:enter(params)
@@ -47,15 +46,7 @@ function ChangeLevelState:render()
 
     self.board:render()
     displayScore(self.score)
-
-    -- ***** add a function displayLostLives in main.lua *****
-    if #self.lostLives > 0 then
-        local offset = (VIRTUAL_WIDTH - 5) - 32
-        for y = 1, #self.lostLives do 
-            love.graphics.draw(gTextures['lostLives'], gFrames['lostLives'][self.lostLives[y]], offset, 5)
-            offset = offset - 32
-        end 
-    end
+    displayLostLives(self.lostLives)
 
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('Level ' .. tostring(self.levelParams.level),

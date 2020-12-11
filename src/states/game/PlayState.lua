@@ -21,7 +21,8 @@ function PlayState:enter(params)
     self.rescuees = params.rescuees
     self.score = params.score
     self.lostLives = params.lostLives
-    self.levelParams = LevelParams(self.score)      
+    self.levelParams = LevelParams(self.score)
+    self.goal = (self.levelParams.level) * 200      
 end
 
 function PlayState:update(dt)
@@ -31,9 +32,13 @@ function PlayState:update(dt)
     self.timer = self.timer + dt
     self.board:update(dt)
 
-    if self.timer > self.levelParams.delay then
-        table.insert(self.rescuees, Rescuee(math.random(3)))
-        self.timer = 0
+    -- If the player has reach the score goal of the current level,
+    -- the level will stop spawning rescuees.
+    if self.score < self.goal then
+        if self.timer > self.levelParams.delay then
+           table.insert(self.rescuees, Rescuee(math.random(3)))
+           self.timer = 0
+        end
     end
 
     
@@ -56,7 +61,8 @@ function PlayState:update(dt)
                 board = self.board,
                 score = self.score,
                 level = self.levelParams.level,
-                lostLives = self.lostLives
+                lostLives = self.lostLives,
+                goal = self.goal
             })
         end
 
@@ -72,10 +78,17 @@ function PlayState:update(dt)
         end
     end
 
-    self.levelParams:update(self.score)
+    -- Triggers a level change if the player reached the score goal and
+    -- saved the remaining rescuees
+    if self.score >= self.goal and #self.rescuees < 1 then
+        gStateMachine:change('change', {
+            score = self.score,
+            lostLives = self.lostLives,
+            board = self.board
+        })
+    end
 
 
-    
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
@@ -89,13 +102,5 @@ function PlayState:render()
     self.board:render()
     displayScore(self.score)
     displayLevel(self.levelParams.level)
-
-    -- ***** add a function displayLostLives in main.lua *****
-    if #self.lostLives > 0 then
-        local offset = (VIRTUAL_WIDTH - 5) - 32
-        for y = 1, #self.lostLives do 
-            love.graphics.draw(gTextures['lostLives'], gFrames['lostLives'][self.lostLives[y]], offset, 5)
-            offset = offset - 32
-        end 
-    end
+    displayLostLives(self.lostLives)
 end

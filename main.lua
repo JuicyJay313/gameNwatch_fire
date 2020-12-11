@@ -98,3 +98,13 @@ function displayLevel(level)
     love.graphics.print('Level: ', VIRTUAL_WIDTH/3, 5)
     love.graphics.printf(tostring(level), VIRTUAL_WIDTH/2, 5, 40, 'left')
 end
+
+function displayLostLives(lostLives)
+    if #lostLives > 0 then
+        local offset = (VIRTUAL_WIDTH - 5) - 32
+        for y = 1, #lostLives do 
+            love.graphics.draw(gTextures['lostLives'], gFrames['lostLives'][lostLives[y]], offset, 5)
+            offset = offset - 32
+        end 
+    end
+end

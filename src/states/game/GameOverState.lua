@@ -46,12 +46,13 @@ end
 
 function GameOverState:render()
     
-    love.graphics.setFont(gFonts['medium'])
+    love.graphics.setFont(gFonts['large'])
     love.graphics.printf("GAME OVER", 0, VIRTUAL_HEIGHT / 3, VIRTUAL_WIDTH, 'center')
 
     if highlighted == 1 then
         love.graphics.setColor(1, 1, 103/255, 1)
     end
+    love.graphics.setFont(gFonts['medium'])
     love.graphics.printf("Retry", 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
 
     love.graphics.setColor(1, 1, 1, 1)
