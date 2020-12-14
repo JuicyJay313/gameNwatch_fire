@@ -36,7 +36,9 @@ end
 
 function TitleState:render()
 
-    love.graphics.printf('Hello Fire!', 0, VIRTUAL_HEIGHT/2 - 6, VIRTUAL_WIDTH, 'center')
+    love.graphics.setFont(gFonts['large'])
+    love.graphics.printf('Fire!', 0, VIRTUAL_HEIGHT/3, VIRTUAL_WIDTH, 'center')
+    love.graphics.setFont(gFonts['medium'])
     love.graphics.printf('Press ENTER to play', 0, VIRTUAL_HEIGHT / 2 + 20, VIRTUAL_WIDTH, 'center')
     displayScore(self.score)
 

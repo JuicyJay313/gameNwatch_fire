@@ -80,13 +80,15 @@ function PlayState:update(dt)
 
     -- Triggers a level change if the player reached the score goal and
     -- saved the remaining rescuees
-    if self.score >= self.goal and #self.rescuees < 1 then
+    if self.levelParams.finished then 
         gStateMachine:change('change', {
             score = self.score,
             lostLives = self.lostLives,
             board = self.board
         })
     end
+
+    if self.score >= self.goal and #self.rescuees < 1 then self.levelParams.finished = true end
 
 
     if love.keyboard.wasPressed('escape') then
